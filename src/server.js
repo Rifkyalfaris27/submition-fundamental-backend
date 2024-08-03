@@ -1,23 +1,14 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const Hapi = require("@hapi/hapi");
+const Hapi = require('@hapi/hapi');
 
-const albums = require("./api/albums");
-const songs = require("./api/songs");
-const AlbumsService = require("./services/postgres/AlbumsService");
-const AlbumValidator = require("./validator/albums");
-const SongsService = require("./services/postgres/SongsService");
-const SongValidator = require("./validator/songs");
-const ClientError = require("./exeptions/ClientError");
-// import Hapi from "@hapi/hapi";
-
-// import AlbumService from "./services/inMemory/AlbumsService.js";
-// import { albumsPlugin } from "./api/albums/index.js";
-// import AlbumValidator from "./validator/albums/index.js";
-// import { songsPlugin } from "./api/songs/index.js";
-// import SongService from "./services/inMemory/SongsService.js";
-// import SongValidator from "./validator/songs/index.js";
-// import ClientError from "./exeptions/ClientError.js";
+const albums = require('./api/albums');
+const songs = require('./api/songs');
+const AlbumsService = require('./services/postgres/AlbumsService');
+const AlbumValidator = require('./validator/albums');
+const SongsService = require('./services/postgres/SongsService');
+const SongValidator = require('./validator/songs');
+const ClientError = require('./exeptions/ClientError');
 
 const init = async () => {
   const albumsService = new AlbumsService();
@@ -28,7 +19,7 @@ const init = async () => {
     host: process.env.HOST,
     routes: {
       cors: {
-        origin: ["*"],
+        origin: ['*'],
       },
     },
   });
@@ -51,12 +42,12 @@ const init = async () => {
     },
   ]);
 
-  server.ext("onPreResponse", (request, h) => {
+  server.ext('onPreResponse', (request, h) => {
     const { response } = request;
 
     if (response instanceof ClientError) {
       const newResponse = h.response({
-        status: "fail",
+        status: 'fail',
         message: response.message,
       });
 
